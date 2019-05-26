@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mBuilder.setView(mView);
         AlertDialog dialog = mBuilder.create();
         dialog.show();
+        // dialog show eklendi
 
     }
 }
