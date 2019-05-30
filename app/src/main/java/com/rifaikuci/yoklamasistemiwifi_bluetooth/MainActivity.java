@@ -1,5 +1,6 @@
 package com.rifaikuci.yoklamasistemiwifi_bluetooth;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +18,12 @@ public class MainActivity extends AppCompatActivity {
     Random random;
     int sayi;
     TextView rastgeleCumle,dialogText;
+    int[] imageArray;
+    int image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16;
+    int image17,image18,image19,image20,image21;
 
+
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+
 
         sayfaSozleri = new ArrayList();
         sayfaSozleri.add("Bir öğretmen bir nesil demektir.;Megnet Zurner");
@@ -54,7 +61,32 @@ public class MainActivity extends AppCompatActivity {
         sayfaSozleri.add("Eğitim, meyvenin kendisi değil, bilgi ağacından meyve toplamaya yarayan bir merdivendir.;Bernard Shaw");
         sayfaSozleri.add("Eğitimin temel amacı, çocukları kendi yeteneklerinin bilincine vardırmaktır.;Erich Fromm");
         sayfaSozleri.add("Eğitimin asıl büyük amacı, bilgilenmek değil, eyleme geçmektir.;Herbert Spencer");
-        sayfaSozleri.add("Bilginin gücüne inanıyorum, kültürün gücüne inanıyorum; ama eğitimin gücüne, daha çok inanıyorum.;Seyyid Kutup");
+        sayfaSozleri.add("Bilginin gücüne inanıyorum, kültürün gücüne inanıyorum ama eğitimin gücüne, daha çok inanıyorum.;Seyyid Kutup");
+
+        image1  = R.drawable.anonim;
+        image2  = R.drawable.anonim;
+        image3  = R.drawable.anonim;
+        image4  = R.drawable.alberteinstein;
+        image5  = R.drawable.muminsekman;
+        image6  = R.drawable.mark;
+        image7  = R.drawable.ralph;
+        image8  = R.drawable.lord;
+        image9  = R.drawable.paul;
+        image10 = R.drawable.voltaire;
+        image11 = R.drawable.cehob;
+        image12 = R.drawable.anonim;
+        image13 = R.drawable.malcolm;
+        image14 = R.drawable.ismet;
+        image15 = R.drawable.seyyit;
+        image16 = R.drawable.seriati;
+        image17 = R.drawable.alberteinstein;
+        image18 = R.drawable.bernardshaw;
+        image19 = R.drawable.erich;
+        image20 = R.drawable.herber;
+        image21 = R.drawable.seyyit;
+        imageArray =new int[] {image1,image2,image3,image4,image5,image6,
+        image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,image17,image18,image19,image20,image21};
+
 
         random = new Random();
 
@@ -67,8 +99,18 @@ public class MainActivity extends AppCompatActivity {
         rastgeleCumle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),separated[1],Toast.LENGTH_SHORT).show();
-                CustomMessageBox();
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.custom_messbox, null);
+                TextView yazar = (TextView) mView.findViewById(R.id.yazar);
+                ImageView resim = (ImageView) mView.findViewById(R.id.resim);
+                yazar.setText(separated[1].toString());
+                resim.setImageResource(imageArray[sayi]);
+
+
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
             }
         });
 
@@ -77,16 +119,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    protected    void  CustomMessageBox()
+    @SuppressLint("ResourceType")
+    protected    void  CustomMessageBox(TextView yazan, ImageView yazarResmin)
     {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.custom_messbox, null);
-        TextView yazar = (TextView) mView.findViewById(R.id.yazar);
-        ImageView resim = (ImageView) mView.findViewById(R.id.resim);
-        mBuilder.setView(mView);
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
-        // dialog show eklendidsdssdss
+
+
+
+
+
 
     }
 }
