@@ -2,13 +2,19 @@ package com.rifaikuci.yoklamasistemiwifi_bluetooth;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ebanx.swipebtn.OnStateChangeListener;
+import com.ebanx.swipebtn.SwipeButton;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
     int[] imageArray;
     int image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16;
     int image17,image18,image19,image20,image21;
-
+    SwipeButton swipeWifi,swipeBluetooth,swipeKapat;
+    WifiManager wifiManager;
 
     @SuppressLint("ResourceType")
     @Override
@@ -29,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rastgeleCumle = (TextView) findViewById(R.id.rastgeleCumle);
+
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
         if(Build.VERSION.SDK_INT>=19)
         {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         sayfaSozleri.add("En iyi öğretmen, ömür boyu öğrenci kalabilendir.;Anonim");
         sayfaSozleri.add("Okul hayata hazırlanış değil, hayatın kendisidir.;F. ChateIain");
         sayfaSozleri.add("Eğitim, insanın okulda öğrendiği her şeyi unuttuğunda arta kalandır.;Albert Einstein");
-        sayfaSozleri.add("Okul hayatı bitince, hayat okulu başIar.;Mümin Sekman");
+        sayfaSozleri.add("Okul hayatı bitince, hayat okulu başlar.;Mümin Sekman");
         sayfaSozleri.add("Eğitim kafayı değiştirmek demektir. Belleği doldurmak değil.;Mark Twain");
         sayfaSozleri.add("Bir okul açılırsa bir hapishane kapanır.;Ralph Waldo Emerson");
         sayfaSozleri.add("Okul eğitimin sonu değil başlangıcıdır.;Lord Prougham");
@@ -85,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         image20 = R.drawable.herber;
         image21 = R.drawable.seyyit;
         imageArray =new int[] {image1,image2,image3,image4,image5,image6,
-        image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,image17,image18,image19,image20,image21};
+                image7,image8,image9,image10,image11,image12,image13,image14,image15,image16,image17,image18,image19,image20,image21};
 
 
         random = new Random();
@@ -114,19 +124,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        swipeKapat = (SwipeButton) findViewById(R.id.swipe_kapat);
+        swipeBluetooth = (SwipeButton) findViewById(R.id.swipe_bluetooth);
+        swipeWifi = (SwipeButton) findViewById(R.id.swipe_wifi);
+
+        swipeKapat.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
+
+
+                try {
+                    Thread.sleep(2000);
+                    Toast.makeText(MainActivity.this, "Uygulama Kapatıldı.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    moveTaskToBack(true);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        swipeBluetooth.setOnStateChangeListener(new OnStateChangeListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onStateChange(boolean active) {
+                Toast.makeText(MainActivity.this, "Bluettoh Açıldı", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+
+        swipeWifi.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
+                Toast.makeText(MainActivity.this, "wifi Açıldı", Toast.LENGTH_SHORT).show();
+                wifiManager.setWifiEnabled(false);
+
+            }
+        });
+
 
     }
 
 
-
-    @SuppressLint("ResourceType")
-    protected    void  CustomMessageBox(TextView yazan, ImageView yazarResmin)
-    {
-
-
-
-
-
-
-    }
 }
+

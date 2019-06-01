@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Yoklama Sistemi Wifi-Bluetooth</string>
+
+    <string-array name="text">
+        <item>Yoklama Sistemi</item>
+        <item>Wifi-Bluetooth</item>
+
+    </string-array>
+
 </resources>

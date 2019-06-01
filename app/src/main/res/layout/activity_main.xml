@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,21 +8,122 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/rastgeleCumle"
+    <com.tomer.fadingtextview.FadingTextView
+        android:id="@+id/fadingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:texts="@array/text"
+        app:timeout="500"
+        tools:layout_editor_absoluteX="31dp" />
+
+    <TextView
+        android:id="@+id/rastgeleCumle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:padding="15dp"
-        android:paddingTop="30dp"
+        android:layout_margin="10dp"
         android:text="Akılsız adam taş gibi: Suya düşerse batar. Saf yürekli adam şeker gibi: Suya düşerse erir. Bilge kişi yağ gibi: Suya düşerse yüzer.;İsmet Özel"
         android:textColor="#FFC6B0"
         android:textSize="18sp"
-        android:textStyle="normal|italic" />
-</RelativeLayout>
+        android:textStyle="normal|italic"
+        app:layout_constraintTop_toBottomOf="@+id/fadingText"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.ebanx.swipebtn.SwipeButton
+        android:id="@+id/swipe_bluetooth"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:button_bottom_padding="10dp"
+        app:button_image_disabled="@drawable/ic_bluetooth_black_24dp"
+        app:button_image_enabled="@drawable/ic_bluetooth_black_24dp"
+        app:button_left_padding="10dp"
+        app:button_right_padding="10dp"
+        app:button_top_padding="10dp"
+        app:inner_text="Bluetooth "
+        app:inner_text_background="@drawable/shape_rounded"
+        app:inner_text_bottom_padding="10dp"
+        app:inner_text_left_padding="10dp"
+        app:inner_text_right_padding="10dp"
+        app:inner_text_size="18sp"
+        app:inner_text_top_padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rastgeleCumle"
+        tools:ignore="MissingConstraints">
+
+    </com.ebanx.swipebtn.SwipeButton>
+
+    <com.ebanx.swipebtn.SwipeButton
+        android:id="@+id/swipe_wifi"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:button_image_disabled="@drawable/ic_wifi_black_24dp"
+        app:button_image_enabled="@drawable/ic_wifi_black_24dp"
+        app:button_left_padding="10dp"
+        app:button_right_padding="10dp"
+        app:button_top_padding="10dp"
+        app:button_bottom_padding="10dp"
+        app:inner_text="   Wifi    "
+        app:inner_text_background="@drawable/shape_rounded"
+        app:inner_text_bottom_padding="10dp"
+        app:inner_text_left_padding="10dp"
+        app:inner_text_right_padding="10dp"
+        app:inner_text_size="18sp"
+        app:inner_text_top_padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_bluetooth"
+        tools:ignore="MissingConstraints">
+
+    </com.ebanx.swipebtn.SwipeButton>
+
+    <com.ebanx.swipebtn.SwipeButton
+        android:id="@+id/swipe_kapat"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:button_image_disabled="@drawable/ic_close_black_24dp"
+        app:button_image_enabled="@drawable/ic_close_black_24dp"
+        app:button_left_padding="10dp"
+        app:button_right_padding="10dp"
+        app:button_top_padding="10dp"
+        app:button_bottom_padding="10dp"
+        app:inner_text="   Kapat   "
+        app:inner_text_background="@drawable/shape_rounded"
+        app:inner_text_bottom_padding="10dp"
+        app:inner_text_left_padding="10dp"
+        app:inner_text_right_padding="10dp"
+        app:inner_text_size="18sp"
+        app:inner_text_top_padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_wifi"
+        tools:ignore="MissingConstraints">
+
+    </com.ebanx.swipebtn.SwipeButton>
+
+
+</android.support.constraint.ConstraintLayout>
