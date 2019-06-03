@@ -12,12 +12,12 @@
         android:id="@+id/fadingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTarih"
         app:texts="@array/text"
         app:timeout="500"
         tools:layout_editor_absoluteX="31dp" />
@@ -124,6 +124,21 @@
         tools:ignore="MissingConstraints">
 
     </com.ebanx.swipebtn.SwipeButton>
+
+    <TextView
+        android:id="@+id/txtTarih"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:padding="7dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

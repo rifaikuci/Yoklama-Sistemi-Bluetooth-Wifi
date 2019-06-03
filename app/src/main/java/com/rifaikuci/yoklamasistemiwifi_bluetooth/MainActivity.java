@@ -2,7 +2,9 @@ package com.rifaikuci.yoklamasistemiwifi_bluetooth;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,19 +18,22 @@ import android.widget.Toast;
 import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList sayfaSozleri;
     Random random;
     int sayi;
-    TextView rastgeleCumle,dialogText;
+    TextView rastgeleCumle,dialogText,txtTarih;
     int[] imageArray;
     int image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16;
     int image17,image18,image19,image20,image21;
     SwipeButton swipeWifi,swipeBluetooth,swipeKapat;
     WifiManager wifiManager;
+    BluetoothAdapter bluetoothAdapter;
 
     @SuppressLint("ResourceType")
     @Override
@@ -36,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rastgeleCumle = (TextView) findViewById(R.id.rastgeleCumle);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        txtTarih =(TextView) findViewById(R.id.txtTarih);
+        SimpleDateFormat bicim = new SimpleDateFormat("dd/M/yyyy");
+        Date simdiTarih = new Date();
+
+        txtTarih.setText(bicim.format(simdiTarih));
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
@@ -151,7 +162,25 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("NewApi")
             @Override
             public void onStateChange(boolean active) {
-                Toast.makeText(MainActivity.this, "Bluettoh Açıldı", Toast.LENGTH_SHORT).show();
+
+                if(bluetoothAdapter.isEnabled()==false)
+                {
+                    Toast.makeText(MainActivity.this, "Bluetooth ile yoklama alınabilmesi için Bluetooth açılması gerekmektedir.", Toast.LENGTH_SHORT).show();
+                    bluetoothAdapter.enable();
+
+
+                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
+                    intent.putExtra("types","bl");
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Bluetooth Açık", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
+                    intent.putExtra("types","bl");
+                    startActivity(intent);
+                }
 
 
             }
@@ -162,8 +191,27 @@ public class MainActivity extends AppCompatActivity {
         swipeWifi.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
             public void onStateChange(boolean active) {
-                Toast.makeText(MainActivity.this, "wifi Açıldı", Toast.LENGTH_SHORT).show();
-                wifiManager.setWifiEnabled(false);
+
+                if(wifiManager.isWifiEnabled()==false)
+                {
+                    Toast.makeText(MainActivity.this, "Wifi üzerinden yoklama almak için wifi ağınızı açılacaktır.", Toast.LENGTH_SHORT).show();
+                    wifiManager.setWifiEnabled(true);
+
+
+                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
+                    intent.putExtra("types","wifi");
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "wifi Ağınız Açık", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
+                    intent.putExtra("types","wifi");
+                    startActivity(intent);
+                }
+
+
 
             }
         });
