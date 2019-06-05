@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="2dp"
+    android:layout_height="wrap_content"
+    android:background="@color/backGround"
+    >
+
+    <ImageView
+        android:id="@+id/ogrenciResim"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:padding="2dp"
+        tools:srcCompat="@drawable/ogrenci"/>
+
+    <TextView
+        android:id="@+id/txtAdSoyad"
+        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:textColor="@android:color/white"
+        android:text="Rifai Kuçi" />
+
+
+    <TextView
+        android:id="@+id/txtOgrenciNumarasi"
+        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_margin="-45dp"
+
+        android:layout_marginTop="45dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:textColor="@android:color/white"
+        android:text="1611404001" />
+
+    <TextView
+        android:id="@+id/txtMac"
+        android:layout_width="match_parent"
+        android:layout_marginRight="70dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_margin="-45dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"
+        android:text="1611404001" />
+
+
+
+</RelativeLayout>

@@ -28,6 +28,9 @@ dependencies {
     // swipe button of library
     implementation 'com.ebanx:swipe-button:0.4.0'
 
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+
     implementation 'com.tomer:fadingtextview:2.5'
 
 
