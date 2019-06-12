@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     int[] imageArray;
     int image1,image2,image3,image4,image5,image6,image7,image8,image9,image10,image11,image12,image13,image14,image15,image16;
     int image17,image18,image19,image20,image21;
-    SwipeButton swipeWifi,swipeBluetooth,swipeKapat;
+    SwipeButton swipeWifi,swipeBluetooth,swipeKapat,swipeDersler;
     WifiManager wifiManager;
     BluetoothAdapter bluetoothAdapter;
 
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         swipeKapat = (SwipeButton) findViewById(R.id.swipe_kapat);
         swipeBluetooth = (SwipeButton) findViewById(R.id.swipe_bluetooth);
         swipeWifi = (SwipeButton) findViewById(R.id.swipe_wifi);
+        swipeDersler=(SwipeButton) findViewById(R.id.swipe_dersler);
 
         swipeKapat.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
@@ -213,6 +214,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            }
+        });
+
+        swipeDersler.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
+                Intent intent = new Intent(getApplicationContext(),dersler.class);
+                startActivity(intent);
             }
         });
 

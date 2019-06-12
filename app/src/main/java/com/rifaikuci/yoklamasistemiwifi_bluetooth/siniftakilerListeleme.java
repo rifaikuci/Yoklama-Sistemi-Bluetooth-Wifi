@@ -13,8 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +26,7 @@ public class siniftakilerListeleme extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_siniftakiler_listeleme);
+      
         intent=getIntent();
         geri = (TextView) findViewById(R.id.deneme);
 
@@ -58,7 +57,7 @@ public class siniftakilerListeleme extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerListeleme.this);
-            View mView = getLayoutInflater().inflate(R.layout.ogrenciDetay, null);
+            View mView = getLayoutInflater().inflate(R.layout.ogrenci_detay, null);
             TextView adsoyad= (TextView) mView.findViewById(R.id.adsoyad);
             ImageView resim = (ImageView) mView.findViewById(R.id.ogrencininresim);
             TextView numara =(TextView) mView.findViewById(R.id.numara);
@@ -84,4 +83,5 @@ public class siniftakilerListeleme extends AppCompatActivity {
         }
     });
     }
+
 }
