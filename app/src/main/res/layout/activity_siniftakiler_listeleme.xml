@@ -31,7 +31,6 @@
         android:layout_marginTop="4dp"
         android:clickable="true"
         android:gravity="start|right"
-        android:onClick="geri"
         android:paddingLeft="6dp"
         android:text="&#8592;"
         android:textColor="#E8E8E8"
@@ -40,24 +39,62 @@
         android:textStyle="bold" />
 
 
-
-
     <ListView
         android:id="@+id/liste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
 
-        android:layout_marginLeft="5dp"
+        android:layout_above="@+id/btnOgrenciEkle"
 
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="75dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="5dp"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnOgrenciEkle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/buttonekle"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:text="Ekle"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnDevam"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/buttondevam"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:padding="5dp"
+        android:text="Devam"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

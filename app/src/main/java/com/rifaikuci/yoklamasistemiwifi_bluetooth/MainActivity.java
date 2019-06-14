@@ -164,25 +164,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStateChange(boolean active) {
 
-                if(bluetoothAdapter.isEnabled()==false)
+                if(bluetoothAdapter==null)
                 {
-                    Toast.makeText(MainActivity.this, "Bluetooth ile yoklama alınabilmesi için Bluetooth açılması gerekmektedir.", Toast.LENGTH_SHORT).show();
-                    bluetoothAdapter.enable();
-
-
-                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
-                    intent.putExtra("types","bl");
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"Telefonuz Bluetooth Desteklenmemektedir.",Toast.LENGTH_SHORT).show();
+                    startActivity(getIntent());
                 }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Bluetooth Açık", Toast.LENGTH_SHORT).show();
+                else {
+                    if (bluetoothAdapter.isEnabled() == false) {
+                        Toast.makeText(MainActivity.this, "Bluetooth ile yoklama alınabilmesi için Bluetooth açılması gerekmektedir.", Toast.LENGTH_SHORT).show();
+                        bluetoothAdapter.enable();
 
-                    Intent intent = new Intent(getApplicationContext(),siniftakilerListeleme.class);
-                    intent.putExtra("types","bl");
-                    startActivity(intent);
+
+                        Intent intent = new Intent(getApplicationContext(), siniftakilerListeleme.class);
+                        intent.putExtra("types", "bluetooth");
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Bluetooth Açık", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), siniftakilerListeleme.class);
+                        intent.putExtra("types", "bluetooth");
+                        startActivity(intent);
+                    }
                 }
-
 
             }
         });

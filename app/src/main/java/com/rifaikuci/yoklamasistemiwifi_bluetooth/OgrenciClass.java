@@ -11,6 +11,12 @@ public class OgrenciClass {
         this.MACadresi = MACadresi;
     }
 
+    public OgrenciClass(String adSoyad, String okulNumarasi) {
+        this.adSoyad = adSoyad;
+        this.okulNumarasi = okulNumarasi;
+        this.MACadresi = "02:00:00:00:00:00";
+    }
+
     public String getAdSoyad() {
         return adSoyad;
     }
