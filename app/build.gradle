@@ -35,5 +35,7 @@ dependencies {
 
     implementation 'com.tomer:fadingtextview:2.5'
 
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:1.2'
+
 
 }

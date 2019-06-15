@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
@@ -129,7 +130,52 @@ public class siniftakilerListeleme extends AppCompatActivity {
     geri();//geri tuşu
     ogrenciEkle();
     devam();
+    manuelOgrenciSilme();
 
+    }
+
+    private void manuelOgrenciSilme() {
+    ogrencilerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(siniftakilerListeleme.this);
+            builder.setTitle("Uyarı");
+            builder.setMessage(adSoyad.get(position)+" Öğrencisini listeden silmek istediğinizden emin misiniz?  ");
+
+            builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+
+                    numaralar.remove(position);
+                    adSoyad.remove(position);
+                    mOgrenciList.remove(position);
+
+                    finish();
+                        startActivity(getIntent());
+
+
+
+
+                }
+            });
+
+            builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Do nothing
+                    Toast.makeText(getApplicationContext()," Öğrenci silme işlemi iptal edildi",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+
+            alert.show();
+            return true;
+        }
+    });
     }
 
     private void devam() {

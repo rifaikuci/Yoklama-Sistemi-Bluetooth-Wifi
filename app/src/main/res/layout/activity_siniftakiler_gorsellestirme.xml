@@ -594,8 +594,9 @@
 
     </GridLayout>
 
+
     <Button
-        android:id="@+id/btnYoklamaDevam"
+        android:id="@+id/bbtnYoklamaKaydet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -612,7 +613,7 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
     <Button
-        android:id="@+id/btnYoklamaKaydet"
+        android:id="@+id/btnYoklamaGonder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -628,5 +629,6 @@
         android:text="Gönder"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
+
 
 </RelativeLayout>

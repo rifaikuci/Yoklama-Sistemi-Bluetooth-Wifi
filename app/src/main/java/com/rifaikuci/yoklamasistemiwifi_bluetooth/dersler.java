@@ -113,10 +113,10 @@ public class dersler extends AppCompatActivity {
                         }
 
                         else {
-                            boolean isInserted =myDb.insertData(ilkHarfBuyuk(dersAdi.getEditText().getText().toString()));
+                            boolean isInserted =myDb.insertData(ilkHarfBuyuk(dersAdi.getEditText().getText().toString().trim()));
                             if(isInserted==true)
                             {
-                                Toast.makeText(getApplicationContext(),ilkHarfBuyuk(dersAdi.getEditText().getText().toString())+
+                                Toast.makeText(getApplicationContext(),ilkHarfBuyuk(dersAdi.getEditText().getText().toString().trim())+
                                         " Dersi Eklendi",Toast.LENGTH_LONG).show();
                                 dersAdi.getEditText().setText("");
                                 finish();
@@ -124,7 +124,7 @@ public class dersler extends AppCompatActivity {
                                 dialog.closeOptionsMenu();
                             }
                             else {
-                                Toast.makeText(getApplicationContext(),ilkHarfBuyuk(dersAdi.getEditText().getText().toString())+
+                                Toast.makeText(getApplicationContext(),ilkHarfBuyuk(dersAdi.getEditText().getText().toString().trim())+
                                         " Dersi Eklenirken bir hata oluştu !",Toast.LENGTH_SHORT).show();
                             }} }});
             }
@@ -249,8 +249,8 @@ public class dersler extends AppCompatActivity {
         if (dersleri.isEmpty()) {
             dersAdi.setError("Ders Adı Boş Geçilemez!!!");
             return false;
-        } else if (dersleri.length() > 20) {
-            dersAdi.setError("Ders Adı 20 Karakterden fazla !!!");
+        } else if (dersleri.length() > 40) {
+            dersAdi.setError("Ders Adı 40 Karakterden fazla !!!");
             return false;
         } else {
             dersAdi.setError(null);

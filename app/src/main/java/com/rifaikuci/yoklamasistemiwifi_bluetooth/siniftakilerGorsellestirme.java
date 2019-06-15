@@ -1,6 +1,8 @@
 package com.rifaikuci.yoklamasistemiwifi_bluetooth;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -10,10 +12,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.numaralar;
 
@@ -29,7 +37,13 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
     ImageView[] imageArray;
     Handler handler;
     Runnable runnable;
-    Button btnYoklamaDevam;
+    Button bbtnYoklamaKaydet,btnYoklamaGonder;
+    ArrayList<String> dersListesi;
+    DatabaseHelper myDb;
+    SpinnerDialog spinnerDialog;
+    Cursor res;
+
+
 
     private int i = 0;
 
@@ -38,9 +52,14 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_siniftakiler_gorsellestirme);
 
-        btnYoklamaDevam    = (Button)findViewById(R.id.btnYoklamaDevam);
+
+        bbtnYoklamaKaydet    = (Button)findViewById(R.id.bbtnYoklamaKaydet);
+        btnYoklamaGonder    = (Button)findViewById(R.id.btnYoklamaGonder);
         geriGorsellestirme = (TextView) findViewById(R.id.geriGorsellestirme);
         txtOgrenciMevcudu = (TextView) findViewById(R.id.txtOgrenciMevcudu);
+        dersListesi= new ArrayList<>();
+        myDb = new DatabaseHelper(this);
+        viewData();
             image1  = (ImageView) findViewById(R.id.image1);
             image2  = (ImageView) findViewById(R.id.image2);
             image3  = (ImageView) findViewById(R.id.image3);
@@ -95,8 +114,8 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                 image31, image32, image33, image34, image35, image36, image37, image38, image39, image40,
                 image41, image42, image43, image44, image45, image46, image47, image48
         };
-
-        btnYoklamaDevam.setVisibility(View.INVISIBLE);
+        bbtnYoklamaKaydet.setVisibility(View.INVISIBLE);
+        btnYoklamaGonder.setVisibility(View.INVISIBLE);
 
         for (ImageView image : imageArray) {
             image.setVisibility(View.INVISIBLE);
@@ -113,10 +132,50 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-
+        spinnerDialog = new SpinnerDialog(siniftakilerGorsellestirme.this,dersListesi,"Ders Seçiniz");
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+            @Override
+            public void onClick(String s, int i) {
+                Toast.makeText(getApplicationContext(),"Seçilen Ders"+s.toString().trim(),Toast.LENGTH_SHORT).show();
+            }
+        });
         geri();
+        yoklamaKaydet();
     }
 
+    private void yoklamaKaydet() {
+
+    bbtnYoklamaKaydet.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(res.getCount()==0)
+            {
+                Toast.makeText(getApplicationContext(),"Kayıtlı Ders bulunmamaktadır.",Toast.LENGTH_SHORT).show();
+
+            }
+            else {
+                spinnerDialog.showSpinerDialog();
+            }
+            //  Toast.makeText(getApplicationContext(),mOgrenciList.get(position).getAdSoyad(),Toast.LENGTH_SHORT).show();
+        }
+    });}
+
+    public  void viewData()
+    {
+        //  dersListesi.clear();
+         res =  myDb.getAllData();
+        if(res.getCount()==0)
+        {
+            Toast.makeText(getApplicationContext(),"Kayıtlı Ders Bulunamadı",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        while (res.moveToNext())
+        {
+            dersListesi.add(res.getString(1));
+
+        }
+
+    }
     private void geri() {
         geriGorsellestirme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +203,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(siniftakilerGorsellestirme.this, "Yoklama Görselleştirme İşlemi Tammalandı", Toast.LENGTH_SHORT).show();
-                btnYoklamaDevam.setVisibility(View.VISIBLE);
+                bbtnYoklamaKaydet.setVisibility(View.VISIBLE);
                 }
             }
         });
