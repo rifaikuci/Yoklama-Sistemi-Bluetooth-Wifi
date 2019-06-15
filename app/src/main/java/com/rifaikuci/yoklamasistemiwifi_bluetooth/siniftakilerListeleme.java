@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -17,6 +19,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,16 +31,22 @@ import java.util.List;
 
 public class siniftakilerListeleme extends AppCompatActivity {
     Intent intent;
-    private ListView ogrencilerList;
-    private OgrenciClassAdapter adapter;
-    private List<OgrenciClass> mOgrenciList;
-    private  ArrayList<String> numaralar;
-    private  ArrayList<String> adSoyad;
+    private  ListView ogrencilerList;
+    private  OgrenciClassAdapter adapter;
+    private static   List<OgrenciClass> mOgrenciList = new ArrayList<>();
+    public static ArrayList<String> numaralar = new ArrayList<>();
+    public static ArrayList<String> adSoyad = new ArrayList<>();
+
+
     TextView geri;
     Button btnOgrenciEkle,btnDevam,btnEkleOgrenci;
     BluetoothAdapter mBluetoothAdapter;
     TextInputLayout ekleOgrenciadSoyad,ekleOgrenciNumara;
     TextInputEditText ediTextAdSoyad,editTextNumara;
+
+
+
+
 
 
 
@@ -58,16 +67,13 @@ public class siniftakilerListeleme extends AppCompatActivity {
         btnDevam        = (Button)findViewById(R.id.btnDevam);
         btnOgrenciEkle  = (Button)findViewById(R.id.btnOgrenciEkle);
 
-        mOgrenciList    = new ArrayList<>();
-        numaralar       = new ArrayList<>();
-        adSoyad         = new ArrayList<>();
+
+
 
 
 
         if(gelenDeger.equalsIgnoreCase("wifi"))
         {
-            Toast.makeText(getApplicationContext(),"Wifi Seçildi",Toast.LENGTH_LONG).show();
-            mOgrenciList.add(new OgrenciClass("wifi Ferhat Özdemir","1611404471","02:00:00:00:00:00"));
 
         }
 
@@ -122,19 +128,20 @@ public class siniftakilerListeleme extends AppCompatActivity {
     });
     geri();//geri tuşu
     ogrenciEkle();
+    devam();
 
     }
 
+    private void devam() {
+    btnDevam.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-
-
-
-
-
-
-
-
-
+            Intent intent = new Intent(getApplicationContext(),siniftakilerGorsellestirme.class);
+            startActivity(intent);
+        }
+    });
+    }
 
 
     //Manuel Olarak Öğrenci Ekleme
@@ -334,4 +341,6 @@ public class siniftakilerListeleme extends AppCompatActivity {
             }
         }
     };
+
+
 }

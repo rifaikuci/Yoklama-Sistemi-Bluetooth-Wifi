@@ -9,36 +9,45 @@
 
 
     <TextView
+
+        android:id="@+id/txtOgrenciMevcudu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="31dp"
         android:background="#f27281"
+        android:gravity="center|bottom"
+        android:paddingTop="40dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+
         android:text="Sınıftakiler"
-        android:gravity="center"
-        android:padding="20dp"
-
-
-
-        android:layout_margin="2dp"
         android:textColor="#E8E8E8"
-        android:textSize="20sp"
-
-        />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/deneme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="27dp"
         android:clickable="true"
         android:gravity="start|right"
+        android:onClick="derslerGeri"
         android:paddingLeft="6dp"
+
         android:text="&#8592;"
         android:textColor="#E8E8E8"
         android:textSize="40sp"
 
-        android:textStyle="bold" />
-
-
+        android:textStyle="bold"
+        tools:ignore="OnClick" />
     <ListView
         android:id="@+id/liste"
         android:layout_width="match_parent"
@@ -48,10 +57,10 @@
         android:layout_above="@+id/btnOgrenciEkle"
 
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="75dp"
+        android:layout_below="@+id/deneme"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
