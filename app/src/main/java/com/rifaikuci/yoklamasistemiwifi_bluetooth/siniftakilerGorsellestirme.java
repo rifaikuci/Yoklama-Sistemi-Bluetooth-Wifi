@@ -206,7 +206,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                     dialog.show();
                 }
             });
-        }
+        }s
         if (Build.VERSION.SDK_INT >= 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         } else {
