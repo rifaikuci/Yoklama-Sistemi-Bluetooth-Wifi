@@ -8,6 +8,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -181,8 +182,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
         txtOgrenciMevcudu.setText("Sınıf Mevcudu : " + numaralar.size());
 
-        for (int i =0; i<numaralar.size();i++)
-        {
+        for (int i = 0; i < numaralar.size(); i++) {
 
             final int finalI = i;
             imageArray[i].setOnClickListener(new OnClickListener() {
@@ -191,10 +191,10 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
                     AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerGorsellestirme.this);
                     View mView = getLayoutInflater().inflate(R.layout.ogrenci_detay, null);
-                    TextView adsoyad= (TextView) mView.findViewById(R.id.adsoyad);
+                    TextView adsoyad = (TextView) mView.findViewById(R.id.adsoyad);
                     ImageView resim = (ImageView) mView.findViewById(R.id.ogrencininresim);
-                    TextView numara =(TextView) mView.findViewById(R.id.numara);
-                    TextView mac =(TextView) mView.findViewById(R.id.mac);
+                    TextView numara = (TextView) mView.findViewById(R.id.numara);
+                    TextView mac = (TextView) mView.findViewById(R.id.mac);
 
                     adsoyad.setText(adSoyad.get(finalI).toString());
                     numara.setText(numaralar.get(finalI).toString());
@@ -206,7 +206,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                     dialog.show();
                 }
             });
-        }s
+        }
         if (Build.VERSION.SDK_INT >= 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         } else {
@@ -220,18 +220,16 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
                 SimpleDateFormat bicim = new SimpleDateFormat("dd-M-yyyy");
                 Date simdiTarih = new Date();
-                tarih =bicim.format(simdiTarih);
+                tarih = bicim.format(simdiTarih);
                 siniftakilerGorsellestirme.this.tarih = bicim.format(simdiTarih);
-                dersAdi=s.toString().trim();
+                dersAdi = s.toString().trim();
                 siniftakilerGorsellestirme.this.dosyaIsmi = s.toString().trim() + "_" + siniftakilerGorsellestirme.this.tarih + ".xls";
-                if(isStoragePermissionGranted()==true) {
+                if (isStoragePermissionGranted() == true) {
                     saveExcelFile(getApplicationContext(), dosyaIsmi.replace(" ", "_"), ilkHarfBuyuk(s.toString().trim()));
                     Toast.makeText(getApplicationContext(), ilkHarfBuyuk(s.toString().trim()) + " Dersi yoklaması Kaydedildi.", Toast.LENGTH_SHORT).show();
                     bbtnYoklamaKaydet.setVisibility(View.INVISIBLE);
                     btnYoklamaGonder.setVisibility(View.VISIBLE);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), " Dersin  yoklamasını kaydetmek için izin vermeniz gerekmektedir. .", Toast.LENGTH_SHORT).show();
 
                 }
