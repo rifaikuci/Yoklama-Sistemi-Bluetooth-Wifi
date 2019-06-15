@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -94,7 +95,9 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
     DatabaseHelper myDb;
     SpinnerDialog spinnerDialog;
     Cursor res;
-
+    String dosyaIsmi;
+    String tarih;
+    String dersAdi;
 
     private int i = 0;
 
@@ -191,12 +194,13 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
                 SimpleDateFormat bicim = new SimpleDateFormat("dd-M-yyyy");
                 Date simdiTarih = new Date();
-
-
-                String dosyaismi = s.toString().trim() + "_" + bicim.format(simdiTarih) + ".xls";
+                tarih =bicim.format(simdiTarih);
+                siniftakilerGorsellestirme.this.tarih = bicim.format(simdiTarih);
+                dersAdi=s.toString().trim();
+                siniftakilerGorsellestirme.this.dosyaIsmi = s.toString().trim() + "_" + siniftakilerGorsellestirme.this.tarih + ".xls";
                 if(isStoragePermissionGranted()==true) {
-                    saveExcelFile(getApplicationContext(), dosyaismi.replace(" ", "_"), ilkHarfBuyuk(s.toString().trim()));
-                    Toast.makeText(getApplicationContext(), ilkHarfBuyuk(s.toString().trim()) + " Dersi yoklaması Alındı.", Toast.LENGTH_SHORT).show();
+                    saveExcelFile(getApplicationContext(), dosyaIsmi.replace(" ", "_"), ilkHarfBuyuk(s.toString().trim()));
+                    Toast.makeText(getApplicationContext(), ilkHarfBuyuk(s.toString().trim()) + " Dersi yoklaması Kaydedildi.", Toast.LENGTH_SHORT).show();
                     bbtnYoklamaKaydet.setVisibility(View.INVISIBLE);
                     btnYoklamaGonder.setVisibility(View.VISIBLE);
                 }
@@ -212,6 +216,32 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         geri();
         yoklamaKaydet();
         yoklamaGonder();
+    }
+
+    private void yoklamaGonder() {
+        btnYoklamaGonder.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent("android.intent.action.SEND");
+                    intent.setType("plain/text");
+                    intent.putExtra("android.intent.extra.EMAIL", new String[]{""});
+                    intent.putExtra("android.intent.extra.SUBJECT", siniftakilerGorsellestirme.this.dersAdi + " Dersinin " + siniftakilerGorsellestirme.this.tarih + " Tarihli Yoklaması");
+                    intent.putExtra("android.intent.extra.STREAM", siniftakilerGorsellestirme.this.getFilesDir() + "/" + siniftakilerGorsellestirme.this.dosyaIsmi + ".xls");
+                    intent.putExtra("android.intent.extra.TEXT", "Yoklama Dosyası Excel Formatında Ektedir. ");
+                    File file = new File(Environment.getExternalStorageDirectory() + "/" + siniftakilerGorsellestirme.this.dosyaIsmi);
+                    Uri uri = Uri.fromFile(file);
+                    intent.putExtra("android.intent.extra.STREAM", uri);
+                    siniftakilerGorsellestirme.this.startActivity(Intent.createChooser(intent, "Send Email"));
+                    btnYoklamaGonder.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "Yoklama Gönderiliyor...", Toast.LENGTH_SHORT).show();
+
+                } catch (Exception var5) {
+                    var5.printStackTrace();
+                }
+            }
+        });
+
     }
 
 

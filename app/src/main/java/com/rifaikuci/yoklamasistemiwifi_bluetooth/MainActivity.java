@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeButton swipeWifi,swipeBluetooth,swipeKapat,swipeDersler;
     WifiManager wifiManager;
     BluetoothAdapter bluetoothAdapter;
+    Intent intent;
 
     @SuppressLint("ResourceType")
     @Override
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         txtTarih =(TextView) findViewById(R.id.txtTarih);
         SimpleDateFormat bicim = new SimpleDateFormat("dd/M/yyyy");
         Date simdiTarih = new Date();
+
 
         txtTarih.setText(bicim.format(simdiTarih));
 
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
         String metin = (String) sayfaSozleri.get(sayi);
         final String[] separated  =metin.split(";");
         rastgeleCumle.setText(separated[0]);
+
+
+
+
 
 
         rastgeleCumle.setOnClickListener(new View.OnClickListener() {
