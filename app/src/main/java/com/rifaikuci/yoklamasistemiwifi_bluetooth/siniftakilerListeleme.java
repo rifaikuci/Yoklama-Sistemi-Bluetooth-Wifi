@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,8 +34,12 @@ public class siniftakilerListeleme extends AppCompatActivity {
     private  ArrayList<String> numaralar;
     private  ArrayList<String> adSoyad;
     TextView geri;
-    Button btnOgrenciEkle,btnDevam;
+    Button btnOgrenciEkle,btnDevam,btnEkleOgrenci;
     BluetoothAdapter mBluetoothAdapter;
+    TextInputLayout ekleOgrenciadSoyad,ekleOgrenciNumara;
+    TextInputEditText ediTextAdSoyad,editTextNumara;
+
+
 
 
 
@@ -115,11 +121,114 @@ public class siniftakilerListeleme extends AppCompatActivity {
 
     });
     geri();//geri tuşu
+    ogrenciEkle();
 
     }
 
 
 
+
+
+
+
+
+
+
+
+
+
+    //Manuel Olarak Öğrenci Ekleme
+    private void ogrenciEkle() {
+        btnOgrenciEkle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerListeleme.this);
+                View mView = getLayoutInflater().inflate(R.layout.manuel_ogrenci_ekle, null);
+                ekleOgrenciadSoyad = (TextInputLayout) mView.findViewById(R.id.adSoyadi);
+                ekleOgrenciNumara  = (TextInputLayout) mView.findViewById(R.id.numarasi);
+                ediTextAdSoyad     =  (TextInputEditText) mView.findViewById(R.id.ekleOgrenciadSoyad);
+                editTextNumara     =  (TextInputEditText) mView.findViewById(R.id.ekleOgrenciNumara);
+                btnEkleOgrenci=(Button) mView.findViewById(R.id.btnEkleOgrenci);
+
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                btnEkleOgrenci.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (  !validateUsername()  ) {
+                            return;
+                        }
+                        else {
+
+
+                            if(ekleOgrenciNumara.getEditText().getText().toString().trim().length()==10 && ekleOgrenciadSoyad.getEditText().getText().toString().isEmpty()==false)
+                            {
+                                if(!numaralar.contains(ekleOgrenciNumara.getEditText().getText().toString())) {
+                                    mOgrenciList.add(new OgrenciClass(ilkHarfBuyuk(ekleOgrenciadSoyad.getEditText().getText().toString().trim()), ekleOgrenciNumara.getEditText().getText().toString()));
+                                    Toast.makeText(getApplicationContext(), ilkHarfBuyuk(ekleOgrenciadSoyad.getEditText().getText().toString().trim()) + " Sınıf Listesine Eklendi", Toast.LENGTH_SHORT).show();
+                                    numaralar.add(ekleOgrenciNumara.getEditText().getText().toString());
+                                    adSoyad.add(ilkHarfBuyuk(ekleOgrenciadSoyad.getEditText().getText().toString().trim()));
+                                    ekleOgrenciadSoyad.getEditText().setText("");
+                                    ekleOgrenciNumara.getEditText().setText("");
+
+                                    dialog.dismiss();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(),"Aynı numarada sınıfta öğrenci bulunmaktadır.",Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Öğrenci Bilgileri Hatalı girilmiştir",Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+
+
+                    }});
+            }
+        });
+
+    }
+    //Öğrenci numarası kontrolleri yapılıyor
+    private boolean validateUsername() {
+        String dersleri = ekleOgrenciNumara.getEditText().getText().toString().trim();
+
+        if (dersleri.isEmpty()) {
+            ekleOgrenciNumara.setError("Öğrenci Numarası Boş Geçilemez!!!");
+            return false;
+        } else if (dersleri.length() ==11) {
+            ekleOgrenciNumara.setError("Öğrenci Numarası 10 haneli olmalı !!!");
+            return false;
+        } else {
+            ekleOgrenciNumara.setError(null);
+            return true;
+        }
+    }
+
+    String ilkHarfBuyuk(String str) {
+        // str Stringinin içindeki kelimelerin ilk harfleri büyük diğerleri küçük yapılır.
+        char c = Character.toUpperCase(str.charAt(0));
+        //ilk harfini buyuttuk
+        str = c + str.substring(1);
+        //buyutulen ilk harften sonra kelimenin diger harflerini ekledik.
+        String bosluk = " ";
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) == ' ') {
+                c = Character.toUpperCase(str.charAt(i + 1));
+                str = str.substring(0, i) + bosluk + c + str.substring(i + 2);
+
+            }
+
+        }
+        return str;
+    }
 
     //kendi cihazımızı getirme fonksiyonu
     private void getMyDeviceName() {
@@ -131,8 +240,8 @@ public class siniftakilerListeleme extends AppCompatActivity {
             if (bol[1].trim().length() == 10 && TextUtils.isDigitsOnly(bol[1].trim())) {
 
                 if(!numaralar.contains(bol[1].toString().trim())) {
-                    mOgrenciList.add(new OgrenciClass(bol[0].trim(),bol[1].trim(),myDevice.getAddress()));
-                    adSoyad.add(bol[0].toString().trim());
+                    mOgrenciList.add(new OgrenciClass(ilkHarfBuyuk(bol[0].trim()),bol[1].trim(),myDevice.getAddress()));
+                    adSoyad.add(ilkHarfBuyuk(bol[0].toString().trim()));
                     numaralar.add(bol[1].toString().trim());
                 }
 
@@ -212,8 +321,8 @@ public class siniftakilerListeleme extends AppCompatActivity {
                     if (separated[1].length() == 10 && TextUtils.isDigitsOnly(separated[1])) {
 
                         if (!numaralar.contains(separated[1].toString().trim())) {
-                            mOgrenciList.add(new OgrenciClass(separated[0].toString().trim(), separated[1].toString().trim(), device.getAddress()));
-                            adSoyad.add(separated[0].toString().trim());
+                            mOgrenciList.add(new OgrenciClass(ilkHarfBuyuk(separated[0].toString().trim()), separated[1].toString().trim(), device.getAddress()));
+                            adSoyad.add(ilkHarfBuyuk(separated[0].toString().trim()));
                             numaralar.add(separated[1].toString().trim());
                         }
                     }
