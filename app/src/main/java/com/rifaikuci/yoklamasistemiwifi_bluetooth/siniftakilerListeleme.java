@@ -34,7 +34,7 @@ public class siniftakilerListeleme extends AppCompatActivity {
     Intent intent;
     private  ListView ogrencilerList;
     private  OgrenciClassAdapter adapter;
-    private static   List<OgrenciClass> mOgrenciList = new ArrayList<>();
+    public static   List<OgrenciClass> mOgrenciList = new ArrayList<>();
     public static ArrayList<String> numaralar = new ArrayList<>();
     public static ArrayList<String> adSoyad = new ArrayList<>();
 

@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import static android.graphics.Paint.Align.CENTER;
 import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.adSoyad;
+import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.mOgrenciList;
 import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER;
 import static org.apache.poi.ss.usermodel.CellStyle.VERTICAL_CENTER;
 
@@ -180,7 +181,32 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
         txtOgrenciMevcudu.setText("Sınıf Mevcudu : " + numaralar.size());
 
+        for (int i =0; i<numaralar.size();i++)
+        {
 
+            final int finalI = i;
+            imageArray[i].setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerGorsellestirme.this);
+                    View mView = getLayoutInflater().inflate(R.layout.ogrenci_detay, null);
+                    TextView adsoyad= (TextView) mView.findViewById(R.id.adsoyad);
+                    ImageView resim = (ImageView) mView.findViewById(R.id.ogrencininresim);
+                    TextView numara =(TextView) mView.findViewById(R.id.numara);
+                    TextView mac =(TextView) mView.findViewById(R.id.mac);
+
+                    adsoyad.setText(adSoyad.get(finalI).toString());
+                    numara.setText(numaralar.get(finalI).toString());
+                    mac.setText(mOgrenciList.get(finalI).getMACadresi());
+
+
+                    mBuilder.setView(mView);
+                    AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+                }
+            });
+        }
         if (Build.VERSION.SDK_INT >= 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         } else {
