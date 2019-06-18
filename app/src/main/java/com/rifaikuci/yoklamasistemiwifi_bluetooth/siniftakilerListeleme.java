@@ -224,9 +224,11 @@ public class siniftakilerListeleme extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), ilkHarfBuyuk(ekleOgrenciadSoyad.getEditText().getText().toString().trim()) + " Sınıf Listesine Eklendi", Toast.LENGTH_SHORT).show();
                                     numaralar.add(ekleOgrenciNumara.getEditText().getText().toString());
                                     adSoyad.add(ilkHarfBuyuk(ekleOgrenciadSoyad.getEditText().getText().toString().trim()));
+
                                     ekleOgrenciadSoyad.getEditText().setText("");
                                     ekleOgrenciNumara.getEditText().setText("");
-
+                                    adapter = new OgrenciClassAdapter(getApplicationContext(), mOgrenciList);
+                                    ogrencilerList.setAdapter(adapter);
                                     dialog.dismiss();
                                 }
                                 else

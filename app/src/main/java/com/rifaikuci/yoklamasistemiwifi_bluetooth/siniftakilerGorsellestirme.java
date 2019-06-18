@@ -1,21 +1,13 @@
 package com.rifaikuci.yoklamasistemiwifi_bluetooth;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -23,61 +15,32 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.Toast;
-
-import static android.graphics.Paint.Align.CENTER;
 import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.adSoyad;
 import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.mOgrenciList;
-import static org.apache.poi.ss.usermodel.CellStyle.ALIGN_CENTER;
-import static org.apache.poi.ss.usermodel.CellStyle.VERTICAL_CENTER;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
-
 import static com.rifaikuci.yoklamasistemiwifi_bluetooth.siniftakilerListeleme.numaralar;
 
 public class siniftakilerGorsellestirme extends AppCompatActivity {
@@ -116,6 +79,30 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         dersListesi = new ArrayList<>();
         myDb = new DatabaseHelper(this);
         viewData();
+       resimIslemleri();
+        bbtnYoklamaKaydet.setVisibility(View.INVISIBLE);
+        btnYoklamaGonder.setVisibility(View.INVISIBLE);
+
+        for (ImageView image : imageArray) {
+            image.setVisibility(View.INVISIBLE);
+        }
+
+        gorsellestirme();
+
+
+        txtOgrenciMevcudu.setText("Sınıf Mevcudu : " + numaralar.size());
+
+        ogrenciBilgileriDialog();
+        transparan();
+        spinnerMenu();
+        geri();
+        yoklamaKaydet();
+        yoklamaGonder();
+    }
+
+    //resimlerin atama ve id belirleme işlemleri
+
+    private void resimIslemleri() {
         image1 = (ImageView) findViewById(R.id.image1);
         image2 = (ImageView) findViewById(R.id.image2);
         image3 = (ImageView) findViewById(R.id.image3);
@@ -170,48 +157,19 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                 image31, image32, image33, image34, image35, image36, image37, image38, image39, image40,
                 image41, image42, image43, image44, image45, image46, image47, image48
         };
-        bbtnYoklamaKaydet.setVisibility(View.INVISIBLE);
-        btnYoklamaGonder.setVisibility(View.INVISIBLE);
+    }
 
-        for (ImageView image : imageArray) {
-            image.setVisibility(View.INVISIBLE);
-        }
-
-        gorsellestirme();
-
-
-        txtOgrenciMevcudu.setText("Sınıf Mevcudu : " + numaralar.size());
-
-        for (int i = 0; i < numaralar.size(); i++) {
-
-            final int finalI = i;
-            imageArray[i].setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerGorsellestirme.this);
-                    View mView = getLayoutInflater().inflate(R.layout.ogrenci_detay, null);
-                    TextView adsoyad = (TextView) mView.findViewById(R.id.adsoyad);
-                    ImageView resim = (ImageView) mView.findViewById(R.id.ogrencininresim);
-                    TextView numara = (TextView) mView.findViewById(R.id.numara);
-                    TextView mac = (TextView) mView.findViewById(R.id.mac);
-
-                    adsoyad.setText(adSoyad.get(finalI).toString());
-                    numara.setText(numaralar.get(finalI).toString());
-                    mac.setText(mOgrenciList.get(finalI).getMACadresi());
-
-
-                    mBuilder.setView(mView);
-                    AlertDialog dialog = mBuilder.create();
-                    dialog.show();
-                }
-            });
-        }
+    //üst tarafın transparan yapılması
+    private void transparan() {
         if (Build.VERSION.SDK_INT >= 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+    }
+
+    //Spinner searchable menu işlemleri bunu kullanırken gradle kütüphane indirilmesi gerek
+    private void spinnerMenu() {
         spinnerDialog = new SpinnerDialog(siniftakilerGorsellestirme.this, dersListesi, "Ders Seçiniz");
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -237,11 +195,38 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
             }
         });
-        geri();
-        yoklamaKaydet();
-        yoklamaGonder();
     }
 
+    //Öğrenci bilgileri Dialog
+    private void ogrenciBilgileriDialog() {
+        for (int i = 0; i < numaralar.size(); i++) {
+
+            final int finalI = i;
+            imageArray[i].setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(siniftakilerGorsellestirme.this);
+                    View mView = getLayoutInflater().inflate(R.layout.ogrenci_detay, null);
+                    TextView adsoyad = (TextView) mView.findViewById(R.id.adsoyad);
+                    ImageView resim = (ImageView) mView.findViewById(R.id.ogrencininresim);
+                    TextView numara = (TextView) mView.findViewById(R.id.numara);
+                    TextView mac = (TextView) mView.findViewById(R.id.mac);
+
+                    adsoyad.setText(adSoyad.get(finalI).toString());
+                    numara.setText(numaralar.get(finalI).toString());
+                    mac.setText(mOgrenciList.get(finalI).getMACadresi());
+
+
+                    mBuilder.setView(mView);
+                    AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+                }
+            });
+        }
+    }
+
+    //yoklama gönderme işlemleri
     private void yoklamaGonder() {
         btnYoklamaGonder.setOnClickListener(new OnClickListener() {
             @Override
@@ -268,7 +253,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
     }
 
-
+    //yoklamayı kayıt işlemleri
     private void yoklamaKaydet() {
 
         bbtnYoklamaKaydet.setOnClickListener(new View.OnClickListener() {
@@ -285,6 +270,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         });
     }
 
+    //Dersleri spinner menüsüne çekme
     public void viewData() {
         //  dersListesi.clear();
         res = myDb.getAllData();
@@ -299,6 +285,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
     }
 
+    //geri butonu
     private void geri() {
         geriGorsellestirme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,7 +296,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         });
     }
 
-
+    //Öğrenci resim olarak ekrana atama
     public void gorsellestirme() {
 
         final Handler handler = new Handler();
@@ -331,6 +318,8 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
 
     }
 
+    //verileri Excel Kayıt bunu kullanırken  gradle dosyalarına kütüphane eklenmesi gerekecek ve poi ile ilgili jar dosyalarıda manuel olarak indirilip eklenmesi gerekecek
+    //elle indirdiğimiz dosyalar libs klasöründe bulabilirsiniz. poi-3.12-android-a.jar , poi-ooxml-schemas-3.12-20150511-a.jar dosya isimleri
     private static boolean saveExcelFile(Context context, String fileName, String Dersin) {
 
         // check if available and not read only
@@ -484,7 +473,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         return success;
     }
 
-
+    //Cihaz izinleri
     public static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
@@ -493,6 +482,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         return false;
     }
 
+    //Cihaz hafız
     public static boolean isExternalStorageAvailable() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
@@ -501,6 +491,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         return false;
     }
 
+    //ilkHarfi büyük
     String ilkHarfBuyuk(String str) {
         // str Stringinin içindeki kelimelerin ilk harfleri büyük diğerleri küçük yapılır.
         char c = Character.toUpperCase(str.charAt(0));
@@ -519,6 +510,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         return str;
     }
 
+    //İzinle Alınıp alınmadığı kontrol ediliyor.
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -534,6 +526,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         }
     }
 
+    //İzinler için gelen cevaplar kontrolü
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

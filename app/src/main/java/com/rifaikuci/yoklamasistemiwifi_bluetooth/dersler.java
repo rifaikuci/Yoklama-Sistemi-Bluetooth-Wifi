@@ -178,6 +178,10 @@ public class dersler extends AppCompatActivity {
             }
         });
 
+        dersSilmeIslemi();
+    }
+        //onLongItem click ile ders silme işlemi
+    private void dersSilmeIslemi() {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -189,19 +193,19 @@ public class dersler extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                   Integer deleteRows =myDb.deleteData(listeID.get(position));
-                   if(deleteRows>0) {
-                       Toast.makeText(getApplicationContext(), dersListesi.get(position) + " Dersi Silindi", Toast.LENGTH_SHORT).show();
-                        listeID.remove(position);
-                        dersListesi.remove(position);
-                        finish();
-                        startActivity(getIntent());
+                        Integer deleteRows =myDb.deleteData(listeID.get(position));
+                        if(deleteRows>0) {
+                            Toast.makeText(getApplicationContext(), dersListesi.get(position) + " Dersi Silindi", Toast.LENGTH_SHORT).show();
+                            listeID.remove(position);
+                            dersListesi.remove(position);
+                            finish();
+                            startActivity(getIntent());
 
-                   }
-                   else
-                   {
-                       Toast.makeText(getApplicationContext(), dersListesi.get(position) + " Dersi Silinemedi", Toast.LENGTH_SHORT).show();
-                   }
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), dersListesi.get(position) + " Dersi Silinemedi", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -223,7 +227,7 @@ public class dersler extends AppCompatActivity {
         });
     }
 
-
+    //dersleri sqlite çağrıldı.
     public  void viewData()
     {
      //  dersListesi.clear();
@@ -242,7 +246,7 @@ public class dersler extends AppCompatActivity {
 
     }
 
-
+    //TextInput kontrolleri yapıldı
     private boolean validateUsername() {
         String dersleri = dersAdi.getEditText().getText().toString().trim();
 
