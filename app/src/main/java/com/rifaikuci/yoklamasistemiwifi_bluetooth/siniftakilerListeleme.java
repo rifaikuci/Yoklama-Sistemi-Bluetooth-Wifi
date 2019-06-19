@@ -47,7 +47,13 @@ public class siniftakilerListeleme extends AppCompatActivity {
 
 
 
-
+    private WifiManager wifiManager;
+    private ListView listView;
+    private Button buttonScan;
+    private int size = 0;
+    private List<ScanResult> results;
+    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayAdapter adapters;
 
 
 
@@ -63,6 +69,10 @@ public class siniftakilerListeleme extends AppCompatActivity {
         intent=getIntent();
         String gelenDeger =intent.getStringExtra("types");
 
+
+
+
+
         geri            = (TextView) findViewById(R.id.deneme);
         ogrencilerList  = (ListView) findViewById(R.id.liste);
         btnDevam        = (Button)findViewById(R.id.btnDevam);
@@ -75,7 +85,14 @@ public class siniftakilerListeleme extends AppCompatActivity {
 
         if(gelenDeger.equalsIgnoreCase("wifi"))
         {
+            wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
+            if (!wifiManager.isWifiEnabled()) {
+                Toast.makeText(this, "WiFi is disabled ... We need to enable it", Toast.LENGTH_LONG).show();
+                wifiManager.setWifiEnabled(true);
+            }
+
+            scanWifi();
         }
 
         // Eğer bluetooth seçilirse
@@ -390,5 +407,48 @@ public class siniftakilerListeleme extends AppCompatActivity {
         }
     };
 
+    private void scanWifi() {
+        arrayList.clear();
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifiManager.startScan();
+    }
 
+    BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            results = wifiManager.getScanResults();
+            unregisterReceiver(this);
+
+            for (ScanResult scanResult : results) {
+
+                arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
+
+                try {
+                    String[] separated = scanResult.SSID.split("-");
+                    separated[1] = separated[1].trim();
+                    if (separated[1].length() == 10 && TextUtils.isDigitsOnly(separated[1])) {
+
+                        if (!numaralar.contains(separated[1].toString().trim())) {
+                            mOgrenciList.add(new OgrenciClass(ilkHarfBuyuk(separated[0].toString().trim()), separated[1].toString().trim(), scanResult.BSSID));
+                            adSoyad.add(ilkHarfBuyuk(separated[0].toString().trim()));
+                            numaralar.add(separated[1].toString().trim());
+                        }
+                    }
+                    adapter = new OgrenciClassAdapter(getApplicationContext(), mOgrenciList);
+                    ogrencilerList.setAdapter(adapter);
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+
+            }
+
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 }

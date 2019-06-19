@@ -279,4 +279,11 @@ public class dersler extends AppCompatActivity {
         }
         return str;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 }

@@ -534,4 +534,11 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
             //resume tasks needing this permission
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 }
