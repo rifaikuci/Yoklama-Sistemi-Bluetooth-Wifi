@@ -95,6 +95,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
         ogrenciBilgileriDialog();
         transparan();
         spinnerMenu();
+        spinnerMenu();
         geri();
         yoklamaKaydet();
         yoklamaGonder();
@@ -182,6 +183,7 @@ public class siniftakilerGorsellestirme extends AppCompatActivity {
                 siniftakilerGorsellestirme.this.tarih = bicim.format(simdiTarih);
                 dersAdi = s.toString().trim();
                 siniftakilerGorsellestirme.this.dosyaIsmi = s.toString().trim() + "_" + siniftakilerGorsellestirme.this.tarih + ".xls";
+
                 if (isStoragePermissionGranted() == true) {
                     saveExcelFile(getApplicationContext(), dosyaIsmi.replace(" ", "_"), ilkHarfBuyuk(s.toString().trim()));
                     Toast.makeText(getApplicationContext(), ilkHarfBuyuk(s.toString().trim()) + " Dersi yoklaması Kaydedildi.", Toast.LENGTH_SHORT).show();

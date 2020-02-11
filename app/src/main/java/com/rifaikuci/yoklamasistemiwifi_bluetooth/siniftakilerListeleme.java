@@ -91,7 +91,7 @@ public class siniftakilerListeleme extends AppCompatActivity {
                 Toast.makeText(this, "WiFi is disabled ... We need to enable it", Toast.LENGTH_LONG).show();
                 wifiManager.setWifiEnabled(true);
             }
-
+sdsd
             scanWifi();
         }
 
